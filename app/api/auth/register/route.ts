@@ -1,22 +1,27 @@
 import prisma from "@/lib/prisma";
-import { NextApiRequest, NextApiResponse } from "next";
-import { hash } from "bcrypt";
+import { hashPassword } from "@/lib/util";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
-  const { email, password } = await req.json();
-  const exists = await prisma.user.findUnique({
+  const { email, password, username }: {email: string, password: string, username: string} = await req.json();
+  const userExists = await prisma.user.findFirst({
     where: {
-      email,
+      OR: [
+        { username: username },
+        { email: email },
+      ],
     },
   });
-  if (exists) {
-    return NextResponse.json({ error: "User already exists" }, { status: 400 });
+  if (userExists) {
+    return NextResponse.json({ error: "An account with same email or username already exists" }, { status: 400 });
   } else {
     const user = await prisma.user.create({
       data: {
+        image: '/user.png',
+        username,
+        name: username,
         email,
-        password: await hash(password, 10),
+        password: await hashPassword(password),
       },
     });
     return NextResponse.json(user);

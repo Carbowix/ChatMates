@@ -24,8 +24,8 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title,
     description
-  }
-  // metadataBase: new URL("https://nextjs-postgres-auth.vercel.app"),
+  },
+  metadataBase: new URL('https://nextjs-postgres-auth.vercel.app')
   // themeColor: "#FFF",
 }
 
@@ -40,7 +40,7 @@ export default async function RootLayout({
         <Toaster />
         <Suspense fallback="Loading...">
           {/*@ts-ignore @ts-expect-error Async Server Component */}
-          {/* <AuthStatus /> */}
+          <AuthStatus />
         </Suspense>
         {children}
       </body>

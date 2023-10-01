@@ -1,5 +1,5 @@
-"use client";
-import { signOut } from "next-auth/react";
+'use client'
+import { signOut } from 'next-auth/react'
 
 export default function SignOut() {
   return (
@@ -9,5 +9,5 @@ export default function SignOut() {
     >
       Goddammit, sign me out!
     </button>
-  );
+  )
 }
