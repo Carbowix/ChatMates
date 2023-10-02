@@ -18,7 +18,9 @@ export default function Login() {
           />
         </Link>
         <h3 className="text-xl font-semibold">Sign In</h3>
-        <p className="text-sm text-gray-500">Login to continue your chit-chat</p>
+        <p className="text-sm text-gray-500">
+          Login to continue your chit-chat
+        </p>
       </div>
       <Form type="login" />
     </AuthContainer>

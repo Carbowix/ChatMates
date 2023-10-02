@@ -27,7 +27,9 @@ export default function Form({ type }: formType) {
     if (callbackParams.has('error') && callbackParams.has('callbackUrl')) {
       const errType = callbackParams.get('error')
       if (errType == 'OAuthAccountNotLinked') {
-        toast.error(errors['OAuthAccountNotLinked'])
+        toast.error(errors['OAuthAccountNotLinked'], {
+          duration: 1500
+        })
         setTimeout(() => {
           router.push('/login')
         }, 1500)
@@ -49,7 +51,7 @@ export default function Form({ type }: formType) {
         toast.success('Login Successful!')
         setTimeout(() => {
           router.refresh()
-          router.push('/protected')
+          router.push('/dashboard')
         }, 1500)
       } else {
         setLoading(false)
@@ -140,6 +142,7 @@ export default function Form({ type }: formType) {
             id="password"
             name="password"
             type="password"
+            placeholder="password"
             required
             className="mt-1 block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-black focus:outline-none focus:ring-black sm:text-sm"
           />

@@ -39,8 +39,7 @@ export default async function RootLayout({
       <body className={inter.variable}>
         <Toaster />
         <Suspense fallback="Loading...">
-          {/*@ts-ignore @ts-expect-error Async Server Component */}
-          <AuthStatus />
+          {/*@ts-ignore @ts-expect-error Async Server Component  <AuthStatus /> */}
         </Suspense>
         {children}
       </body>
