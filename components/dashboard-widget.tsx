@@ -1,6 +1,6 @@
 'use client'
 import Img from 'next/image'
-export default function ChatWidget() {
+export default function DashboardWidget() {
   return (
     <div className="w-full flex items-center gap-2 px-4 py-2 hover:bg-gray-600 transition-all cursor-pointer">
       <Img

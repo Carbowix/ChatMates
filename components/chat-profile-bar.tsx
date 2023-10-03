@@ -1,33 +1,24 @@
 'use client'
-import { signOut } from 'next-auth/react'
 import Img from 'next/image'
-import { AiOutlineUserAdd } from 'react-icons/ai'
-import { GoSignOut } from 'react-icons/go'
+import { BiArrowBack } from 'react-icons/bi'
+import DashboardButtonIcon from './dashboard-button-icon'
+import { useRouter } from 'next/navigation'
 export default function ChatProfileBar() {
+  const router = useRouter()
   return (
-    <div className="w-full bg-slate-800 flex justify-between p-4">
-      <div className="h-full flex gap-2 items-center">
-        <Img
-          src="/user.png"
-          alt="profile picture"
-          className="w-10 h-10 rounded-full"
-          height={120}
-          width={120}
-        />
-        <div className="font-semibold font-xl">Youssef Elmarakshy</div>
-      </div>
-      <div className="flex gap-2">
-        {/* TODO: Add friend functionality */}
-        <button className="p-2 rounded text-md text-white hover:bg-gray-200 hover:text-blue-500 transition-all focus:outline-none">
-          <AiOutlineUserAdd />
-        </button>
-        <button
-          onClick={() => signOut()}
-          className="p-2 rounded text-lg text-white hover:bg-gray-200 hover:text-blue-500 transition-all focus:outline-none"
-        >
-          <GoSignOut />
-        </button>
-      </div>
+    <div className="flex items-center w-full h-[9%] bg-slate-900 gap-x-4 px-4">
+      <DashboardButtonIcon
+        onClick={() => router.push('/dashboard')}
+        icon={<BiArrowBack />}
+      />
+      <Img
+        src={'/user.png'}
+        width={128}
+        height={128}
+        alt="chat profile picture"
+        className="w-10 h-10"
+      />
+      <h4 className="font-semibold text-xl">Youssef Elmarakshy</h4>
     </div>
   )
 }
