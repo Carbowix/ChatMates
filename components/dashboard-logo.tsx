@@ -1,6 +1,6 @@
 'use client'
 import Img from 'next/image'
-export default function ChatLogoDashboard() {
+export default function DashboardLogo() {
   return (
     <div className="hidden md:flex w-full h-full bg-slate-700 flex-col justify-center items-center">
       <Img

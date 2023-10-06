@@ -51,10 +51,24 @@ model User {
   emailVerified DateTime?
   image         String?
 
-  status    userStatus @default(OFFLINE)
-  biography String     @default("")
-  friends   User[]     @relation("Friendship")
-  friendsOf User[]     @relation("Friendship")
-  accounts  Account[]
-  sessions  Session[]
+  status                 userStatus      @default(OFFLINE)
+  biography              String          @default("")
+  friends                User[]          @relation("Friendship")
+  friendsOf              User[]          @relation("Friendship")
+  accounts               Account[]
+  sessions               Session[]
+  sentFriendRequests     FriendRequest[] @relation("SentFriendRequests")
+  receivedFriendRequests FriendRequest[] @relation("ReceivedFriendRequests")
+}
+
+model FriendRequest {
+  id         Int      @id @default(autoincrement())
+  senderId   String
+  receiverId String
+  status     String // Enum or string field to represent request status (e.g., "pending," "accepted," "rejected")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  sender   User @relation("SentFriendRequests", fields: [senderId], references: [id])
+  receiver User @relation("ReceivedFriendRequests", fields: [receiverId], references: [id])
 }
