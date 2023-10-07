@@ -59,6 +59,8 @@ model User {
   sessions               Session[]
   sentFriendRequests     FriendRequest[] @relation("SentFriendRequests")
   receivedFriendRequests FriendRequest[] @relation("ReceivedFriendRequests")
+  ChatRooms              ChatRoom[]      @relation("chatRooms")
+  Message                Message[]
 }
 
 model FriendRequest {
@@ -71,4 +73,18 @@ model FriendRequest {
 
   sender   User @relation("SentFriendRequests", fields: [senderId], references: [id])
   receiver User @relation("ReceivedFriendRequests", fields: [receiverId], references: [id])
+}
+
+model ChatRoom {
+  id       String    @id @default(cuid())
+  users    User[]    @relation("chatRooms")
+  messages Message[]
+}
+
+model Message {
+  id         Int      @id
+  sender     User     @relation(fields: [userId], references: [id])
+  ChatRoom   ChatRoom @relation(fields: [chatRoomId], references: [id])
+  chatRoomId String
+  userId     String
 }

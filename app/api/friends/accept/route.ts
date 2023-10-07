@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { getAuthSession } from '../../auth/[...nextauth]/route'
+import prisma from '@/lib/prisma'
 export async function POST(req: Request) {
   try {
     const body = await req.json()
@@ -38,24 +39,16 @@ export async function POST(req: Request) {
         }
       })
 
-      await prisma?.user.update({
-        where: { id: userId },
-        data: {
-          friends: {
-            connect: {
-              id: session.user.id
-            }
-          },
-          friendsOf: {
-            connect: {
-              id: session.user.id
-            }
-          }
-        }
-      })
-
       await prisma?.friendRequest.delete({
         where: { id: friendRequest.id }
+      })
+
+      await prisma.chatRoom.create({
+        data: {
+          users: {
+            connect: [{ id: session.user.id }, { id: userId }]
+          }
+        }
       })
 
       console.log('Accepted friend Request')

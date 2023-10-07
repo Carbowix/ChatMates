@@ -93,14 +93,24 @@ export default function FriendRequests({
             <button
               disabled={loading}
               onClick={() => handleFriendRequest('accept', request.sender.id)}
-              className="flex items-center justify-center w-8 h-8 rounded-full hover:border-green-500 hover:bg-green-500 transition-all cursor-pointer duration-100"
+              className={
+                loading
+                  ? 'cursor-not-allowed border-gray-200 bg-gray-100'
+                  : 'hover:border-green-500 hover:bg-green-500 transition-all cursor-pointer duration-100' +
+                    ` flex items-center justify-center w-8 h-8 rounded-full `
+              }
             >
               <AiOutlineCheck />
             </button>
             <button
               disabled={loading}
               onClick={() => handleFriendRequest('deny', request.sender.id)}
-              className="flex items-center justify-center w-8 h-8 rounded-full hover:border-red-500 hover:bg-red-500 transition-all cursor-pointer duration-100"
+              className={
+                loading
+                  ? 'cursor-not-allowed border-gray-200 bg-gray-100'
+                  : 'hover:border-red-500 hover:bg-red-500 transition-all cursor-pointer duration-100' +
+                    ` flex items-center justify-center w-8 h-8 rounded-full `
+              }
             >
               <AiOutlineClose />
             </button>

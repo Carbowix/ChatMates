@@ -12,6 +12,7 @@ const sendFriendRequest = async (senderId: string, receiverId: string) => {
     }
   })
 
+  /*
   // Update the sender's sentFriendRequests array
   await prisma.user.update({
     where: {
@@ -39,13 +40,12 @@ const sendFriendRequest = async (senderId: string, receiverId: string) => {
       }
     }
   })
-
+  */
   return friendRequest
 }
 
 export async function POST(req: Request) {
   try {
-    // console.log('Checking')
     const body = await req.json()
     const session = await getAuthSession()
     const { username } = z.object({ username: z.string() }).parse(body)
@@ -80,10 +80,7 @@ export async function POST(req: Request) {
     const existingFriendship = await prisma.user.findFirst({
       where: {
         id: session.user.id,
-        AND: [
-          { friends: { some: { id: userToBeAdded.id } } },
-          { friendsOf: { some: { id: userToBeAdded.id } } }
-        ]
+        AND: { friends: { some: { id: userToBeAdded.id } } }
       }
     })
 

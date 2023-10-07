@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { getAuthSession } from '../../auth/[...nextauth]/route'
+import prisma from '@/lib/prisma'
 export async function POST(req: Request) {
   try {
     const body = await req.json()
