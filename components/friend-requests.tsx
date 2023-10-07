@@ -26,9 +26,38 @@ export default function FriendRequests({
   sessionId
 }: FriendRequestsProps) {
   const router = useRouter()
+  const [loading, setLoading] = useState(false)
   const [friendRequests, setFriendRequests] = useState<friendRequest[]>(
     initialFriendRequests?.receivedFriendRequests!
   )
+
+  const handleFriendRequest = async (
+    type: 'accept' | 'deny',
+    userId: string
+  ) => {
+    setLoading(true)
+    const friendRequestResponse = await fetch(`/api/friends/${type}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        userId: userId
+      })
+    })
+
+    const { message } = await friendRequestResponse.json()
+
+    if (friendRequestResponse.status === 200) {
+      toast.success(message)
+      setFriendRequests((prev) =>
+        prev.filter((request) => request.sender.id !== userId)
+      )
+      router.refresh()
+    } else {
+      toast.error(message)
+    }
+  }
 
   useEffect(() => {
     pusherClient.subscribe(`user-${sessionId}-incoming_friend_requests`)
@@ -61,10 +90,18 @@ export default function FriendRequests({
               bgColor="bg-slate-800"
             />
             <p className="text-xl">{request.sender.username}</p>
-            <button className="flex items-center justify-center w-8 h-8 rounded-full hover:border-green-500 hover:bg-green-500 transition-all cursor-pointer duration-100">
+            <button
+              disabled={loading}
+              onClick={() => handleFriendRequest('accept', request.sender.id)}
+              className="flex items-center justify-center w-8 h-8 rounded-full hover:border-green-500 hover:bg-green-500 transition-all cursor-pointer duration-100"
+            >
               <AiOutlineCheck />
             </button>
-            <button className="flex items-center justify-center w-8 h-8 rounded-full hover:border-red-500 hover:bg-red-500 transition-all cursor-pointer duration-100">
+            <button
+              disabled={loading}
+              onClick={() => handleFriendRequest('deny', request.sender.id)}
+              className="flex items-center justify-center w-8 h-8 rounded-full hover:border-red-500 hover:bg-red-500 transition-all cursor-pointer duration-100"
+            >
               <AiOutlineClose />
             </button>
           </div>

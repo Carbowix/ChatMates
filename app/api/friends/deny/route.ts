@@ -4,9 +4,37 @@ export async function POST(req: Request) {
   try {
     const body = await req.json()
     const session = await getAuthSession()
-    const { username } = z.object({ username: z.string() }).parse(body)
+    const { userId } = z.object({ userId: z.string() }).parse(body)
     if (!session) {
       return new Response('Unauthorized', { status: 401 })
+    }
+
+    const friendRequest = await prisma?.friendRequest.findFirst({
+      where: {
+        senderId: userId,
+        receiverId: session.user.id
+      },
+      select: {
+        id: true
+      }
+    })
+
+    if (friendRequest) {
+      await prisma?.friendRequest.delete({
+        where: { id: friendRequest.id }
+      })
+
+      console.log('Denied friend Request')
+
+      return Response.json(
+        { message: 'Friend request denied' },
+        { status: 200 }
+      )
+    } else {
+      return Response.json(
+        { message: 'Friend request does not exist' },
+        { status: 404 }
+      )
     }
   } catch (e) {
     console.log(e)
