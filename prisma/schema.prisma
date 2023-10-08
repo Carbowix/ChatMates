@@ -60,7 +60,7 @@ model User {
   sentFriendRequests     FriendRequest[] @relation("SentFriendRequests")
   receivedFriendRequests FriendRequest[] @relation("ReceivedFriendRequests")
   ChatRooms              ChatRoom[]      @relation("chatRooms")
-  Message                Message[]
+  UnseenMessages         Message[]
 }
 
 model FriendRequest {
@@ -76,15 +76,20 @@ model FriendRequest {
 }
 
 model ChatRoom {
-  id       String    @id @default(cuid())
-  users    User[]    @relation("chatRooms")
-  messages Message[]
+  id        String    @id @default(cuid())
+  name      String?
+  desc      String?
+  users     User[]    @relation("chatRooms")
+  messages  Message[]
+  updatedAt DateTime  @updatedAt
 }
 
 model Message {
   id         Int      @id
+  content    String
   sender     User     @relation(fields: [userId], references: [id])
   ChatRoom   ChatRoom @relation(fields: [chatRoomId], references: [id])
   chatRoomId String
   userId     String
+  createdAt  DateTime @default(now())
 }

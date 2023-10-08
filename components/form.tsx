@@ -64,6 +64,7 @@ export default function Form({ type }: formType) {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
+          username: event.currentTarget.username.value,
           email: event.currentTarget.email.value,
           password: event.currentTarget.password.value
         })

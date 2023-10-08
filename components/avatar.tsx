@@ -11,17 +11,17 @@ export default function Avatar({
   bgColor?: string
 }) {
   return (
-    <div className="relative w-12 h-12 rounded-full">
+    <div className="relative w-14 h-12 rounded-full">
       <Img
         src={avatarLink}
         alt="profile picture"
-        className="w-12 h-10 rounded-full"
+        className="w-14 h-12 rounded-full"
         height={120}
         width={120}
       />
       {!offline && (
         <div
-          className={`absolute bottom-2 right-0 -translate-x-2 z-10 w-3 h-3 ${bgColor} rounded-full flex justify-center items-center`}
+          className={`absolute bottom-0 right-0 -translate-x-2 z-10 w-3 h-3 ${bgColor} rounded-full flex justify-center items-center`}
         >
           <div className={`w-2 h-2 bg-green-400 rounded-full`}></div>
         </div>

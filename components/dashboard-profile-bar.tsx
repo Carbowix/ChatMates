@@ -1,6 +1,5 @@
 'use client'
 import { signOut } from 'next-auth/react'
-import Img from 'next/image'
 import { AiOutlineUserAdd } from 'react-icons/ai'
 import { GoSignOut } from 'react-icons/go'
 import DashboardButtonIcon from './dashboard-button-icon'
