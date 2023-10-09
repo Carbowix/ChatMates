@@ -1,6 +1,5 @@
 import DashboardLogo from '@/components/dashboard-logo'
 import DashboardProfileBar from '@/components/dashboard-profile-bar'
-import SearchBar from '@/components/search-bar'
 import { getAuthSession } from '../api/auth/[...nextauth]/route'
 import prisma from '@/lib/prisma'
 import { notFound } from 'next/navigation'
@@ -52,7 +51,6 @@ export default async function Dashboard() {
             totalFriendRequests={allChats?.receivedFriendRequests.length!}
             userSessionId={userSession.user.id}
           />
-          <SearchBar />
           <DashboardChatList
             userSessionId={userSession.user.id}
             chatRooms={allChats?.ChatRooms!}
