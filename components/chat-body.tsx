@@ -1,9 +1,10 @@
 'use client'
 import { Message } from '@prisma/client'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import ChatMessage from './chat-message'
 import { pusherClient } from '@/lib/pusher'
 import ChatInputBar from './chat-input-bar'
+import LoadingDots from './typing-dots'
 
 interface ChatBoardProps {
   chatId: string
@@ -18,7 +19,15 @@ export default function ChatBoard({
   receiverId,
   initMessages
 }: ChatBoardProps) {
+  const chatBodyRef = useRef<HTMLDivElement>(null)
   const [messages, setMessages] = useState<Message[]>(initMessages)
+
+  const scrollToBottom = () => {
+    if (chatBodyRef.current) {
+      const element = chatBodyRef.current
+      element.scrollTop = element.scrollHeight
+    }
+  }
   useEffect(() => {
     pusherClient.subscribe(`chat-${chatId}`)
 
@@ -33,9 +42,16 @@ export default function ChatBoard({
       pusherClient.unbind('incoming-message', messageHandler)
     }
   }, [chatId])
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [messages])
   return (
     <>
-      <div className="w-full h-[85%] overflow-y-scroll bg-slate-700 flex flex-col gap-y-4 p-4">
+      <div
+        ref={chatBodyRef}
+        className="w-full h-[85%] overflow-y-scroll bg-slate-700 flex flex-col gap-y-4 p-4"
+      >
         {messages.map((message) => {
           return (
             <ChatMessage

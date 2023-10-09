@@ -31,7 +31,6 @@ export async function POST(req: Request) {
       }
     })
 
-    // console.log(newMessage)
     if (newMessage) {
       await pusherServer.trigger(
         `chat-${chatId}`,
@@ -41,7 +40,11 @@ export async function POST(req: Request) {
       await pusherServer.trigger(
         `dashboard-${recepientId}`,
         'incoming-message',
-        newMessage
+        {
+          username: session.user.name,
+          avatar: session.user.image,
+          message: newMessage
+        }
       )
     }
     return Response.json({ message: 'OK' }, { status: 200 })

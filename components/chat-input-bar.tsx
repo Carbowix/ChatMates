@@ -11,6 +11,8 @@ import EmojiPicker, {
 import toast from 'react-hot-toast'
 import LoadingSpinner from './loadingSpinner'
 
+const TYPING_TIMEOUT = 5000
+let typingTimer: any = null
 interface ChatInputBarProps {
   chatId: string
   authorId: string
@@ -22,6 +24,7 @@ export default function ChatInputBar({
   recepientId
 }: ChatInputBarProps) {
   const inputRef = useRef<HTMLInputElement | null>(null)
+  const [isTyping, setIsTyping] = useState(false)
   const [showEmojiPicker, setShowEmojiPicker] = useState(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [inputValue, setInputValue] = useState<string>('')
@@ -57,6 +60,44 @@ export default function ChatInputBar({
     }
     setIsLoading(false)
   }
+
+  const handleTyping = async () => {
+    if (!isTyping) {
+      // Start typing indicator
+      setIsTyping(true)
+      await fetch('/api/message/typing', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          status: isTyping,
+          recepientId: recepientId,
+          chatId: chatId
+        })
+      })
+    }
+
+    clearTimeout(typingTimer)
+    typingTimer = setTimeout(handleStopTyping, TYPING_TIMEOUT)
+  }
+
+  const handleStopTyping = async () => {
+    clearTimeout(typingTimer)
+    setIsTyping(false)
+    await fetch('/api/message/typing', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        status: isTyping,
+        recepientId: recepientId,
+        chatId: chatId
+      })
+    })
+  }
+
   return (
     <div className="w-full flex-grow p-4 flex items-center gap-x-2 mt-auto">
       <div className="relative">
@@ -87,11 +128,16 @@ export default function ChatInputBar({
           onKeyDown={(e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
               e.preventDefault()
+              handleStopTyping()
               sendMessage()
             }
           }}
           value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
+          onBlur={handleStopTyping}
+          onChange={(e) => {
+            setInputValue(e.target.value)
+            handleTyping()
+          }}
         />
         <div
           onClick={() => sendMessage()}

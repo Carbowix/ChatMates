@@ -63,6 +63,11 @@ export const authOptions: NextAuthOptions = {
         session.user.username = token.username
       }
 
+      await prisma.user.update({
+        where: { id: token.id },
+        data: { status: 'ONLINE' }
+      })
+
       return session
     },
 
