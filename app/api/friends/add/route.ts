@@ -95,13 +95,14 @@ export async function POST(req: Request) {
     )
 
     if (friendRequestProcess.id) {
+      console.log(JSON.stringify(session))
       await pusherServer.trigger(
         `user-${userToBeAdded.id}-incoming_friend_requests`,
         'incoming_friend_requests',
         {
           id: session.user.id,
           username: session.user.username,
-          image: session.user.image
+          avatar: session.user.image
         }
       )
     }
