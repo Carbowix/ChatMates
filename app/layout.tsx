@@ -25,8 +25,7 @@ export const metadata: Metadata = {
     title,
     description
   },
-  metadataBase: new URL('https://nextjs-postgres-auth.vercel.app')
-  // themeColor: "#FFF",
+  metadataBase: new URL('https://chat-mates.vercel.app/')
 }
 
 export default async function RootLayout({

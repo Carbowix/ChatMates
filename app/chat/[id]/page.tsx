@@ -9,15 +9,13 @@ export const dynamic = 'force-dynamic'
 export default async function ChatPage({ params }: { params: { id: string } }) {
   const filterAllUnseenMessages = async (userId: string, chatId: string) => {
     try {
-      await prisma.chatRoom.update({
-        where: { id: chatId },
+      await prisma.message.updateMany({
+        where: {
+          NOT: { userId: userId },
+          chatRoomId: chatId
+        },
         data: {
-          messages: {
-            updateMany: {
-              where: { NOT: { userId: userId }, missed: true },
-              data: { missed: false }
-            }
-          }
+          missed: false
         }
       })
 

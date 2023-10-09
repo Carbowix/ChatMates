@@ -23,7 +23,7 @@ export default async function FriendsPage() {
       }
     }
   })
-  console.log(JSON.stringify(incomingFriendRequests))
+
   return (
     <div className="w-screen h-screen bg-slate-600 flex items-center justify-center">
       <div className="w-full h-full lg:w-3/4 lg:h-[98%] rounded-sm bg-slate-800 border-slate-100 shadow-xl p-2 md:p-4">

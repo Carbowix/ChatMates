@@ -61,10 +61,9 @@ export default function FriendRequests({
 
   useEffect(() => {
     pusherClient.subscribe(`user-${sessionId}-incoming_friend_requests`)
-    console.log('listening to ', `user-${sessionId}-incoming_friend_requests`)
 
     const friendRequestHandler = (friendRequest: friendRequest) => {
-      toast('Incoming Friend Request', { icon: 'ℹ️' })
+      // toast('Incoming Friend Request', { icon: 'ℹ️' })
       setFriendRequests((prev) => [...prev, friendRequest])
     }
 
@@ -82,38 +81,41 @@ export default function FriendRequests({
         return (
           <div
             key={request.sender.username}
-            className="w-full flex gap-x-4 hover:bg-gray-600 transition-all cursor-pointer items-center p-2 border-b-2 border-gray-500"
+            className="w-full flex justify-between hover:bg-gray-600 transition-all cursor-pointer items-center p-2 border-b-2 border-gray-500"
           >
-            <Avatar
-              avatarLink={request.sender.image!}
-              offline
-              bgColor="bg-slate-800"
-            />
-            <p className="text-xl">{request.sender.username}</p>
-            <button
-              disabled={loading}
-              onClick={() => handleFriendRequest('accept', request.sender.id)}
-              className={
-                loading
-                  ? 'cursor-not-allowed border-gray-200 bg-gray-100'
-                  : 'hover:border-green-500 hover:bg-green-500 transition-all cursor-pointer duration-100' +
-                    ` flex items-center justify-center w-8 h-8 rounded-full `
-              }
-            >
-              <AiOutlineCheck />
-            </button>
-            <button
-              disabled={loading}
-              onClick={() => handleFriendRequest('deny', request.sender.id)}
-              className={
-                loading
-                  ? 'cursor-not-allowed border-gray-200 bg-gray-100'
-                  : 'hover:border-red-500 hover:bg-red-500 transition-all cursor-pointer duration-100' +
-                    ` flex items-center justify-center w-8 h-8 rounded-full `
-              }
-            >
-              <AiOutlineClose />
-            </button>
+            <div className="flex gap-x-4">
+              <Avatar
+                avatarLink={request.sender.image!}
+                offline
+                bgColor="bg-slate-800"
+              />
+              <p className="text-xl">{request.sender.username}</p>
+            </div>
+
+            <div className="flex gap-x-2">
+              <button
+                disabled={loading}
+                onClick={() => handleFriendRequest('accept', request.sender.id)}
+                className={`${
+                  loading
+                    ? 'cursor-not-allowed bg-gray-500'
+                    : 'hover:border-green-500 hover:bg-green-500 transition-all cursor-pointer duration-100'
+                } flex items-center justify-center w-8 h-8 rounded-full`}
+              >
+                <AiOutlineCheck />
+              </button>
+              <button
+                disabled={loading}
+                onClick={() => handleFriendRequest('deny', request.sender.id)}
+                className={`${
+                  loading
+                    ? 'cursor-not-allowed bg-gray-500'
+                    : 'hover:border-red-500 hover:bg-red-500 transition-all cursor-pointer duration-100'
+                } flex items-center justify-center w-8 h-8 rounded-full`}
+              >
+                <AiOutlineClose />
+              </button>
+            </div>
           </div>
         )
       })}

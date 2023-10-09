@@ -49,7 +49,7 @@ export default function ChatProfileBar({
         icon={<BiArrowBack />}
       />
       <Avatar avatarLink={avatarLink} offline />
-      <div className="text-xl font-semibold text-white flex">
+      <div className="text-xl font-semibold text-white flex gap-x-2">
         {isTyping && <LoadingDots />}
         <h4 className=" text-xl">
           {username} {isTyping ? 'is typing...' : ''}

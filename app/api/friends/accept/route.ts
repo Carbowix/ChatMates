@@ -51,8 +51,6 @@ export async function POST(req: Request) {
         }
       })
 
-      console.log('Accepted friend Request')
-
       return Response.json(
         { message: 'Friend request accepted!' },
         { status: 200 }

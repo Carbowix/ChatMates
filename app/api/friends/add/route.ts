@@ -11,36 +11,6 @@ const sendFriendRequest = async (senderId: string, receiverId: string) => {
       status: 'pending'
     }
   })
-
-  /*
-  // Update the sender's sentFriendRequests array
-  await prisma.user.update({
-    where: {
-      id: senderId
-    },
-    data: {
-      sentFriendRequests: {
-        connect: {
-          id: friendRequest.id
-        }
-      }
-    }
-  })
-
-  // Update the receiver's receivedFriendRequests array
-  await prisma.user.update({
-    where: {
-      id: receiverId
-    },
-    data: {
-      receivedFriendRequests: {
-        connect: {
-          id: friendRequest.id
-        }
-      }
-    }
-  })
-  */
   return friendRequest
 }
 
@@ -129,11 +99,9 @@ export async function POST(req: Request) {
         `user-${userToBeAdded.id}-incoming_friend_requests`,
         'incoming_friend_requests',
         {
-          sender: {
-            id: session.user.id,
-            username: session.user.username,
-            image: session.user.image
-          }
+          id: session.user.id,
+          username: session.user.username,
+          image: session.user.image
         }
       )
     }

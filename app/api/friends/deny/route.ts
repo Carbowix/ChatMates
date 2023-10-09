@@ -25,8 +25,6 @@ export async function POST(req: Request) {
         where: { id: friendRequest.id }
       })
 
-      console.log('Denied friend Request')
-
       return Response.json(
         { message: 'Friend request denied' },
         { status: 200 }
