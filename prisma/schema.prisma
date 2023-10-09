@@ -60,11 +60,11 @@ model User {
   sentFriendRequests     FriendRequest[] @relation("SentFriendRequests")
   receivedFriendRequests FriendRequest[] @relation("ReceivedFriendRequests")
   ChatRooms              ChatRoom[]      @relation("chatRooms")
-  UnseenMessages         Message[]
+  Message                Message[]
 }
 
 model FriendRequest {
-  id         Int      @id @default(autoincrement())
+  id         String   @id @default(cuid())
   senderId   String
   receiverId String
   status     String // Enum or string field to represent request status (e.g., "pending," "accepted," "rejected")
@@ -85,11 +85,12 @@ model ChatRoom {
 }
 
 model Message {
-  id         Int      @id
+  id         String   @id @default(cuid())
   content    String
   sender     User     @relation(fields: [userId], references: [id])
   ChatRoom   ChatRoom @relation(fields: [chatRoomId], references: [id])
   chatRoomId String
   userId     String
   createdAt  DateTime @default(now())
+  missed     Boolean  @default(true)
 }

@@ -2,10 +2,11 @@ import { getAuthSession } from '@/app/api/auth/[...nextauth]/route'
 import AddFriend from '@/components/add-friend'
 import FriendRequests from '@/components/friend-requests'
 import prisma from '@/lib/prisma'
+import { notFound } from 'next/navigation'
 
 export default async function FriendsPage() {
   const session = await getAuthSession()
-  if (!session) return <></>
+  if (!session) return notFound()
   const incomingFriendRequests = await prisma.user.findUnique({
     where: { id: session?.user.id },
     select: {
