@@ -3,12 +3,8 @@
 <div align="center">
   <img src='./public/logo.png' width="100px" height="100px" />
   <h1>ChatMates</h1>
-</div>
-
-<h3 align="center">A simple online chatting platform for texting your mates</h3>
-
-<div align="center">
-  <p>
+  <h3>A simple online chatting platform for texting your mates</h3>
+   <p>
     <a href="https://github.com/Carbowix/ChatMates/blob/main/LICENSE">
       <img src="https://img.shields.io/github/license/carbowix/ChatMates?style=for-the-badge" alt="license mit"/>
     </a>
@@ -20,15 +16,16 @@
       <img src="https://img.shields.io/discord/633795546724827157?color=5865F2&logo=discord&logoColor=white" alt="Discord server" />
     </a>
   </p>
-  <br>
+  <p style="margin: 20px;">
     <a href="https://chat-mates.vercel.app">View Demo</a>
     ·
     <a href="https://github.com/Carbowix/ChatMates/issues">Report Bug</a>
     ·
     <a href="https://github.com/Carbowix/ChatMates/issues">Request Feature</a>
-   
+  </p>
+
+  <img src='./misc/cm_chat.png' width="800" height="600" />
 </div>
- <br>
 <details>
 <summary style="font-size: 21px;">Table of Contents</summary>
 <ol>
@@ -39,6 +36,7 @@
         <li><a href="#installation">Installation</a></li>
     </ul>
     <li><a href="#technologies">Technologies</a></li>
+    <li><a href="#showcase">Showcase</a></li>
     <li><a href="#acknowledgements">Acknowledgements</a></li>
 </details>
 <br>
@@ -114,6 +112,13 @@ This project is heavily based on the [nextjs-postgres-auth-starter](https://gith
 - [Prisma](https://www.prisma.io/) for database ORM
 - [ESLint](https://eslint.org/) configured with some initial rules
 - [Prettier](https://prettier.io/) to enforce consistent code style
+
+# Showcase
+
+<div style="display: flex; gap: 20px; flex-wrap: wrap; margin: 20px;">
+  <img src='./misc/cm_dashboard.png' width="800" height="600" />
+  <img src='./misc/cm_chat.png' width="800" height="600" />
+</div>
 
 # Acknowledgements
 
